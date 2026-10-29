@@ -35,6 +35,15 @@ export interface OutgoingMessage {
   content: string;
 }
 
+/** Wire request body for `POST /runs` and `POST /conversations/{id}/runs`. */
+export interface RunRequestBody {
+  systemPrompt: string;
+  messages: OutgoingMessage[];
+  maxIterations: number;
+  toolTimeout: string;
+  requestId: string;
+}
+
 /** One SSE event from a run stream, discriminated by `type`. */
 export type RunEvent =
   | {

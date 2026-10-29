@@ -5,6 +5,7 @@ import type {
   ListQuery,
   Message,
   RunEvent,
+  RunRequestBody,
 } from "./types.js";
 
 /** The subset of `fetch` the transport relies on, injectable for tests. */
@@ -19,14 +20,6 @@ export interface TransportOptions {
   headers: Record<string, string>;
   fetch?: FetchLike;
   timeout?: number;
-}
-
-interface RunRequestBody {
-  systemPrompt: string;
-  messages: unknown[];
-  maxIterations: number;
-  toolTimeout: string;
-  requestId: string;
 }
 
 /**
@@ -271,17 +264,18 @@ function withTimeout(
   if (timeoutMs === undefined) {
     return { signal, cleanup: () => {} };
   }
-  if (signal === undefined) {
-    const timer = AbortSignal.timeout(timeoutMs);
-    return { signal: timer, cleanup: () => {} };
-  }
 
   const controller = new AbortController();
-  const onAbort = () => controller.abort(signal.reason);
   const timer = setTimeout(
     () => controller.abort(new VinoStreamError(`request timed out after ${timeoutMs}ms`)),
     timeoutMs,
   );
+
+  if (signal === undefined) {
+    return { signal: controller.signal, cleanup: () => clearTimeout(timer) };
+  }
+
+  const onAbort = () => controller.abort(signal.reason);
   signal.addEventListener("abort", onAbort, { once: true });
   if (signal.aborted) onAbort();
   return {

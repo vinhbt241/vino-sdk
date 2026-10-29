@@ -7,18 +7,11 @@ import type {
   Message,
   RunEvent,
   RunOptions,
+  RunRequestBody,
   RunResult,
   ToolResult,
   VinoOptions,
 } from "./types.js";
-
-interface RunRequestBody {
-  systemPrompt: string;
-  messages: unknown[];
-  maxIterations: number;
-  toolTimeout: string;
-  requestId: string;
-}
 
 /**
  * Client for the vino-agent HTTP API.

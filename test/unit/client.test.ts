@@ -128,3 +128,21 @@ test("default baseUrl is http://127.0.0.1:8080", async () => {
 
   assert.equal(calls[0]?.url, "http://127.0.0.1:8080/health");
 });
+
+test("client timeout rejects with VinoStreamError, not a raw DOMException", async () => {
+  const fetchFn = async (_input: string, init?: RequestInit) =>
+    new Promise<Response>((_resolve, reject) => {
+      init?.signal?.addEventListener(
+        "abort",
+        () => reject(init?.signal?.reason),
+        { once: true },
+      );
+    });
+  const vino = new Vino({ baseUrl: "http://x", timeout: 10, fetch: fetchFn });
+
+  await assert.rejects(
+    vino.run({ messages: [{ role: "user", content: "hi" }] }),
+    (err: unknown) =>
+      err instanceof VinoStreamError && /timed out/.test((err as Error).message),
+  );
+});

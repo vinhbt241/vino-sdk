@@ -29,7 +29,7 @@ async function collect(iter: AsyncIterable<RunEvent>): Promise<RunEvent[]> {
 
 const RUN_BODY = {
   systemPrompt: "",
-  messages: [{ role: "user", content: "hi" }],
+  messages: [{ role: "user" as const, content: "hi" }],
   maxIterations: 0,
   toolTimeout: "",
   requestId: "",
