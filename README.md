@@ -135,9 +135,10 @@ try {
 
 ## Browser / CORS note
 
-The vino-backend server binds to loopback and sends **no CORS headers**. A
-browser client calling it cross-origin will be blocked. Serve your app from
-the same origin (reverse proxy), or add CORS handling to the server.
+The vino-backend server sends CORS headers, so a browser client can call the
+API cross-origin directly — no reverse proxy required. If the server is
+configured to allow only specific origins, make sure your app's origin is in
+the allow-list.
 
 ## Development
 
