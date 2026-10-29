@@ -1,7 +1,7 @@
 {
   "name": "vino-sdk",
   "version": "0.1.0",
-  "description": "Zero-dependency TypeScript client for the vino-agent HTTP API.",
+  "description": "Zero-dependency TypeScript client for the vino-backend HTTP API.",
   "type": "module",
   "license": "MIT",
   "sideEffects": false,

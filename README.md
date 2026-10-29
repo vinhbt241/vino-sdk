@@ -1,7 +1,7 @@
 # vino-sdk
 
 Zero-dependency TypeScript client for the
-[vino-agent](https://github.com/vinhbt241/vino-agent) HTTP API. Stream runs,
+[vino-backend](https://github.com/vinhbt241/vino-backend) HTTP API. Stream runs,
 continue conversations, and read transcripts through one ergonomic client —
 no hand-rolled SSE parsing or error mapping.
 
@@ -135,7 +135,7 @@ try {
 
 ## Browser / CORS note
 
-The vino-agent server binds to loopback and sends **no CORS headers**. A
+The vino-backend server binds to loopback and sends **no CORS headers**. A
 browser client calling it cross-origin will be blocked. Serve your app from
 the same origin (reverse proxy), or add CORS handling to the server.
 
@@ -148,8 +148,8 @@ npm test            # unit + integration (integration boots the real Go server)
 npm run build       # emit dist/
 ```
 
-Integration tests vendor the vino-agent server under
-`test/fixture/vino-agent` and boot it with `go run` against a mock
+Integration tests vendor the vino-backend server under
+`test/fixture/vino-backend` and boot it with `go run` against a mock
 OpenAI-compatible provider, so no API key is required. When Go is absent, the
 integration suite auto-skips.
 

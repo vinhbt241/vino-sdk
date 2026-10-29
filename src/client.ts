@@ -14,7 +14,7 @@ import type {
 } from "./types.js";
 
 /**
- * Client for the vino-agent HTTP API.
+ * Client for the vino-backend HTTP API.
  *
  * ```ts
  * const vino = new Vino({ baseUrl: "http://127.0.0.1:8080" });

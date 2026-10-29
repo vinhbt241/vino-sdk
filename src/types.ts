@@ -1,5 +1,5 @@
 /**
- * Wire-level types for the vino-agent HTTP API. These mirror the JSON
+ * Wire-level types for the vino-backend HTTP API. These mirror the JSON
  * documented in the server's `docs/api.md` and are the single source of
  * truth for the client's request/response shapes.
  */

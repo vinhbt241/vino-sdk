@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 import { Vino, type RunEvent } from "../../src/index.js";
 import { freePort, startMockLLM, waitForHealth } from "./helpers.js";
 
-const fixtureDir = fileURLToPath(new URL("../fixture/vino-agent", import.meta.url));
+const fixtureDir = fileURLToPath(new URL("../fixture/vino-backend", import.meta.url));
 const goAvailable = spawnSync("go", ["version"]).status === 0;
 const skipReason =
   goAvailable && existsSync(join(fixtureDir, "go.mod"))

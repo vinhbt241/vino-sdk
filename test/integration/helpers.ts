@@ -68,7 +68,7 @@ export async function waitForHealth(vino: Vino, timeoutMs = 20000): Promise<void
     } catch {
       // Server not up yet; keep polling.
     }
-    if (Date.now() > deadline) throw new Error("vino-agent server did not become healthy");
+    if (Date.now() > deadline) throw new Error("vino-backend server did not become healthy");
     await new Promise((r) => setTimeout(r, 100));
   }
 }

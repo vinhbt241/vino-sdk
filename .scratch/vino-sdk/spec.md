@@ -1,8 +1,8 @@
-# Spec: vino-sdk (TypeScript client for vino-agent)
+# Spec: vino-sdk (TypeScript client for vino-backend)
 
 ## Problem Statement
 
-Developers who want to build clients against the vino-agent HTTP server must
+Developers who want to build clients against the vino-backend HTTP server must
 hand-roll an HTTP caller: they re-implement SSE framing, event parsing, error
 mapping, conversation pagination, and resume semantics every time. The only
 reference is a raw `fetch` example in `docs/api.md`. There is no installable,
@@ -11,7 +11,7 @@ typed client that speaks the vino HTTP contract out of the box.
 ## Solution
 
 Ship a small, zero-dependency TypeScript SDK (`vino-sdk`) that wraps the full
-vino-agent HTTP surface behind one ergonomic `Vino` client. Consumers install
+vino-backend HTTP surface behind one ergonomic `Vino` client. Consumers install
 one module, construct `new Vino({ baseUrl })`, and call intent-shaped methods
 (`run`, `stream`, `listConversations`, `getConversation`, `health`) — no SSE
 parsing, no error mapping, no query encoding. The SDK exposes the event stream
@@ -21,7 +21,7 @@ into a resolved `RunResult`.
 ## User Stories
 
 1. As a developer, I want to install a single npm package, so that I can talk
-   to a running vino-agent server without re-implementing an HTTP caller.
+   to a running vino-backend server without re-implementing an HTTP caller.
 2. As a developer, I want a `Vino` client with a configurable `baseUrl`, so
    that I can point it at a server on a non-default address.
 3. As a developer, I want to run the agent and receive the assistant's final
@@ -105,7 +105,7 @@ into a resolved `RunResult`.
 Seams (where tests observe behavior; confirmed by the user):
 
 - **Seam A — public API** (the `Vino` class): the highest seam. Integration
-  tests boot the real vino-agent Go server and assert observable behavior
+  tests boot the real vino-backend Go server and assert observable behavior
   through the client. Catches wire-format drift and end-to-end contract
   correctness. Misses nothing critical, but is slow and needs a Go toolchain.
 - **Seam B — SSE framing** (the pure bytes→`RunEvent` parser): unit-tested
@@ -137,9 +137,9 @@ auto-skip with a clear message when Go is absent.
 
 - The server is loopback-only and sends no CORS headers; a cross-origin browser
   client needs same-origin serving or a server CORS change. Document this.
-- Pinned integration fixture: vino-agent commit
+- Pinned integration fixture: vino-backend commit
   `afd9da512853e6d45a8fae3318a4a52da12ca87e`, vendored under
-  `test/fixture/vino-agent` for reproducible tests.
+  `test/fixture/vino-backend` for reproducible tests.
 - `npm publish` is intentionally left to the maintainer; the SDK is prepared
   for it (exports map, `files`, declaration output) but not published by the
   build.
